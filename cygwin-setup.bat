@@ -5,10 +5,15 @@ rem Run this script where you would like to install Cygwin (e.g. C:\cygwin)
 set root=%~dp0
 set cygbin=%root%bin\
 
-set /p do_install_cygwin=Install Cygwin? (Y/n)
-if "%do_install_cygwin%"=="y" (
-  echo Downloading cygwin-setup-x86.exe
-  bitsadmin.exe /transfer "DownloadCygwin" https://cygwin.com/setup-x86.exe %root%/setup-x86.exe
+set do_install_cygwin=y
+set /p do_install_cygwin=Install Cygwin in %root%? (Y/n)
+if /I "%do_install_cygwin%"=="y" (
+  if exist setup-x86.exe (
+    echo Using existing setup-x86.exe
+  ) else (
+    rem bitsadmin.exe /transfer "DownloadCygwin" https://cygwin.com/setup-x86.exe %root%/setup-x86.exe
+    echo Downloaded setup-x86.exe
+  )
 
   echo.
   echo Installing base packages
@@ -25,7 +30,7 @@ if "%do_install_cygwin%"=="y" (
   rem   --no-desktop        Do not install desktop shortcuts.
   rem   --no-shortcuts      Do not install shortcuts.
   rem   --no-startmenu      Do not install start menu shortcuts.
-  rem setup-x86.exe --categories Base --root %root% --local-package-dir %root%packages --site http://mirrors.kernel.org/sourceware/cygwin --only-site --wait --quiet-mode --no-desktop --no-shortcuts --no-startmenu
+  setup-x86.exe --categories Base --root %root% --local-package-dir %root%packages --site http://mirrors.kernel.org/sourceware/cygwin --only-site --wait --quiet-mode --no-desktop --no-shortcuts --no-startmenu
 )
 
 if not exist %cygbin%\apt-cyg (

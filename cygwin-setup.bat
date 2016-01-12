@@ -11,7 +11,7 @@ if /I "%do_install_cygwin%"=="y" (
   if exist setup-x86.exe (
     echo Using existing setup-x86.exe
   ) else (
-    rem bitsadmin.exe /transfer "DownloadCygwin" https://cygwin.com/setup-x86.exe %root%/setup-x86.exe
+    bitsadmin.exe /transfer "DownloadCygwin" https://cygwin.com/setup-x86.exe %root%/setup-x86.exe
     echo Downloaded setup-x86.exe
   )
 
